@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="script.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+  </head>
+  <body onload="populateVoiceList()">
+    <h1>Text to Speech</h1>
+    <select id="voiceSelect"></select>
+    <p>Velocidad: <input id="rate" value="1.0" /></p>
+    <p>Tono: <input id="pitch" value="1.0" /></p>
+    <div id="body">
+      <p>
+        La edad para acceder a la pensión de <strong>vejez</strong>, el tiempo
+        de servicio o el número de semanas cotizadas, y el monto de la pensión
+        de vejez de las personas que al momento de entrar en vigencia el sistema
+        tengan treinta y cinco o más años de edad si son mujeres o cuarenta o
+        más años de edad si son hombres, o quince o más años de servicios
+        cotizados, será la establecida en el régimen anterior al cual se
+        encuentren afiliados.
+      </p>
+      <p>
+        Las demás condiciones y requisitos aplicables a estas personas para
+        acceder a la pensión de vejez, se regirán por las disposiciones
+        contenidas en la presente ley.
+      </p>
+    </div>
+    <button onclick="Speak()">Speak</button>
+    <button onclick="Stop('P')">Pause</button>
+    <button onclick="Stop('R')">Resume</button>
+    <button onclick="Stop('C')">Stop</button>
+    <button onclick="SpeechLine()">Seleccionar frase</button>
+  </body>
+</html>
