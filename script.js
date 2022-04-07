@@ -96,35 +96,24 @@ function replaceChars(strNode) {
   return strNode.replace(/(\n)+/g, ' ');
 }
 
+var utter = new SpeechSynthesisUtterance();
 var currentCharIndex = undefined;
 var extendIndex = undefined;
 var startNode = null;
 var endNode = null;
 function StarSpeak() {
-  let utter = new SpeechSynthesisUtterance();
-
-  //window.find(texts[iCurrent]);
   currentCharIndex = undefined;
-
-  let voices = getVoices();
-  let v = document.getElementById('voiceSelect');
-  utter.voice = voices[v.value];
-  utter.lang = 'es-CO';
-  utter.text = texts[iCurrent].texto;
-  utter.volume = 1.0;
-  utter.rate = document.getElementById('rate').value;
-  utter.pitch = document.getElementById('pitch').value;
 
   // event after text has been spoken
   utter.onend = function () {
     iCurrent = iCurrent + 1;
     startNode = null;
 
-    if (iCurrent < texts.length) StarSpeak();
+    if (iCurrent < texts.length) SpeakLine();
   };
 
   utter.onboundary = function (event) {
-    console.log(event.name + ' boundary CharIndex: ' + event.charIndex);
+    //console.log(event.name + ' boundary CharIndex: ' + event.charIndex);
 
     if (event.name === 'sentence') {
       return;
@@ -150,8 +139,6 @@ function StarSpeak() {
     let x = lenNodes(ndxs, 0, ndxs.indexOf(endNode));
     if (x > 0) extendIndex = extendIndex - x;
 
-    console.log(currentCharIndex, extendIndex);
-
     if (startNode && endNode) {
       let selection = window.getSelection();
       selection.removeAllRanges();
@@ -166,8 +153,20 @@ function StarSpeak() {
     }
   };
 
-  // speak
-  speechSynthesis.speak(utter);
+  SpeakLine();
+}
+
+function SpeakLine() {
+  let voices = getVoices();
+  let v = document.getElementById('voiceSelect');
+  utter.voice = voices[v.value];
+  utter.lang = 'es-CO';
+  utter.text = texts[iCurrent].texto;
+  utter.volume = 1.0;
+  utter.rate = document.getElementById('rate').value;
+  utter.pitch = document.getElementById('pitch').value;
+
+  speechSynthesis.speak(utter); // speak
 }
 
 function lenNodes(all, start, end) {
